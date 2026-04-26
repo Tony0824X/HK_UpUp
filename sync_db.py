@@ -1,7 +1,8 @@
 """
 Sync Data.xlsx to Supabase DB.
-Reads all competition data from Excel, clears the DB, and re-inserts.
+Reads all competition and paper data from Excel, clears the DB, and re-inserts.
 Poster images are extracted from Excel and uploaded to Supabase Storage.
+Simplified Chinese text is automatically converted to Traditional Chinese.
 
 Usage:
     python3 sync_db.py
@@ -13,6 +14,16 @@ import os
 import zipfile
 import openpyxl
 from datetime import datetime
+from opencc import OpenCC
+
+# Simplified -> Traditional Chinese converter
+_cc = OpenCC('s2t')
+
+def s2t(text):
+    """Convert Simplified Chinese to Traditional Chinese. Returns None if input is None."""
+    if text is None:
+        return None
+    return _cc.convert(str(text).strip())
 
 # ---- Config (reads from environment variables) ----
 # Set these before running:
@@ -197,6 +208,61 @@ def sync():
         print(f"\n✅ Done! {len(data)} competitions synced to Supabase.")
     else:
         print(f"\n❌ Error: {resp.status_code} - {resp.text}")
+
+    # Step 5: Sync Papers
+    sync_papers(wb)
+
+
+def sync_papers(wb):
+    """Sync Papers sheet to Supabase papers table."""
+    if "Papers" not in wb.sheetnames:
+        print("\n⚠️  No 'Papers' sheet found in Excel, skipping.")
+        return
+
+    print("\n📄 Syncing Papers...")
+    ws = wb["Papers"]
+
+    papers = []
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row[0]:  # skip empty rows
+            continue
+
+        paper = {
+            "full_name": s2t(row[0]),
+            "abbreviation": s2t(row[1]) if row[1] else None,
+            "official_url": str(row[2]).strip() if row[2] else None,
+            "conference_dates": s2t(row[3]) if row[3] else None,
+            "venue": s2t(row[4]) if row[4] else None,
+            "organizer": s2t(row[5]) if row[5] else None,
+            "registration_deadline": s2t(row[6]) if row[6] else None,
+        }
+        papers.append(paper)
+        print(f"  ✓ {paper['abbreviation'] or paper['full_name'][:40]}")
+
+    if not papers:
+        print("  No paper data found.")
+        return
+
+    # Clear existing papers
+    print(f"\n🗑️  Clearing existing papers...")
+    requests.delete(
+        f"{SUPABASE_URL}/rest/v1/papers?full_name=neq.",
+        headers=HEADERS,
+    )
+
+    # Insert
+    print(f"📥 Inserting {len(papers)} papers...")
+    resp = requests.post(
+        f"{SUPABASE_URL}/rest/v1/papers",
+        headers=HEADERS,
+        json=papers,
+    )
+
+    if resp.status_code in [200, 201]:
+        data = resp.json()
+        print(f"✅ {len(data)} papers synced to Supabase.")
+    else:
+        print(f"❌ Papers error: {resp.status_code} - {resp.text}")
 
 
 if __name__ == "__main__":

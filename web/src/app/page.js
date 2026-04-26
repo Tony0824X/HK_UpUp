@@ -233,7 +233,7 @@ export default function Home() {
           </div>
           <div className={styles.navLinks}>
             <span className={`${styles.navLink} ${styles.navLinkActive}`}>Competition</span>
-            <span className={styles.navLink}>Paper</span>
+            <Link href="/paper" className={styles.navLink}>Paper</Link>
             <button className={styles.navCta} id="nav-get-started">
               Get Started
             </button>
