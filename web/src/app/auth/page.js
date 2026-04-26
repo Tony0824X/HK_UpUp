@@ -43,8 +43,13 @@ export default function AuthPage() {
       return;
     }
 
-    if (password.length < 6) {
-      setError("密碼至少需要 6 個字元");
+    if (password.length < 8) {
+      setError("密碼至少需要 8 個字元");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password)) {
+      setError("密碼需要包含大寫字母、小寫字母和數字");
       return;
     }
 
@@ -156,7 +161,7 @@ export default function AuthPage() {
                 <input
                   type="text"
                   className={styles.input}
-                  placeholder="Tony"
+                  placeholder="Tai Man"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   required
@@ -199,7 +204,7 @@ export default function AuthPage() {
                 <input
                   type={showPassword ? "text" : "password"}
                   className={styles.input}
-                  placeholder="至少 6 個字元"
+                  placeholder="至少 8 字元（大寫+小寫+數字）"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
