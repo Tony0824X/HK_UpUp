@@ -142,7 +142,7 @@ function CompetitionCard({ competition, index }) {
             📅 Deadline
             <strong>{deadlineText}</strong>
           </div>
-          <div className={styles.compCardArrow}>→</div>
+          <div className={styles.compCardArrow}>View →</div>
         </div>
       </div>
     </Link>
