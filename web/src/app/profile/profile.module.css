@@ -61,7 +61,9 @@
 }
 
 .logoIcon {
-  font-size: 1.6rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
 }
 
 .logoGradient {

@@ -36,8 +36,9 @@
 }
 
 .logoIcon {
-  font-size: 1.6rem;
-  animation: float 3s ease-in-out infinite;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
 }
 
 .logoGradient {
