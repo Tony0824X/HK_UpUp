@@ -193,9 +193,9 @@ function ProfileContent() {
           <div className={styles.navRight}>
             <Link href="/" className={styles.navLink}>Competition</Link>
             <Link href="/paper" className={styles.navLink}>Paper</Link>
-            <button onClick={handleLogout} className={styles.logoutBtn}>
-              Logout
-            </button>
+            <div className={styles.navAvatarWrap}>
+              <div className={styles.navAvatar}>{initials}</div>
+            </div>
           </div>
         </div>
       </nav>
@@ -282,6 +282,9 @@ function ProfileContent() {
           </div>
           <button onClick={handleSave} className={styles.saveBtn} disabled={saving}>
             {saving ? "Saving..." : "Save Changes"}
+          </button>
+          <button onClick={handleLogout} className={styles.logoutBtn}>
+            🚪 Logout
           </button>
         </section>
 
