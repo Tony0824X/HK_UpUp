@@ -59,24 +59,13 @@ export default function PaperPage() {
       </nav>
 
       <main className={styles.main}>
-        {/* Header */}
-        <div className={styles.pageHeader}>
-          <h1 className={styles.pageTitle}>
-            <span className={styles.pageTitleIcon}>📄</span>
-            Call for Papers
-          </h1>
-          <p className={styles.pageSubtitle}>
-            探索全球學術會議徵稿資訊，把握投稿機會
-          </p>
-        </div>
-
         {/* Search */}
         <div className={styles.searchWrapper}>
           <span className={styles.searchIcon}>🔍</span>
           <input
             type="text"
             className={styles.searchInput}
-            placeholder="搜尋會議名稱、地點、主辦方..."
+            placeholder="搜尋全球學術會議徵稿資訊，把握投稿機會..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             id="paper-search"
