@@ -155,7 +155,12 @@ export default function Home() {
   const [allTags, setAllTags] = useState([]);
   const [showClosed, setShowClosed] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
   const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setAuthUser(data?.user || null));
+  }, []);
 
   useEffect(() => {
     fetchCompetitions();
@@ -234,9 +239,15 @@ export default function Home() {
           <div className={styles.navLinks}>
             <span className={`${styles.navLink} ${styles.navLinkActive}`}>Competition</span>
             <Link href="/paper" className={styles.navLink}>Paper</Link>
-            <Link href="/auth" className={styles.navCta} id="nav-get-started">
-              Get Started
-            </Link>
+            {authUser ? (
+              <Link href="/profile" className={styles.navAvatar} id="nav-profile">
+                {(authUser.user_metadata?.first_name?.[0] || "").toUpperCase()}{(authUser.user_metadata?.last_name?.[0] || "").toUpperCase()}
+              </Link>
+            ) : (
+              <Link href="/auth" className={styles.navCta} id="nav-get-started">
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       </nav>

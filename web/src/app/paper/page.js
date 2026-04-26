@@ -9,6 +9,11 @@ export default function PaperPage() {
   const [papers, setPapers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [authUser, setAuthUser] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => setAuthUser(data?.user || null));
+  }, []);
 
   useEffect(() => {
     async function fetchPapers() {
@@ -51,9 +56,15 @@ export default function PaperPage() {
           <div className={styles.navLinks}>
             <Link href="/" className={styles.navLink}>Competition</Link>
             <Link href="/paper" className={`${styles.navLink} ${styles.navLinkActive}`}>Paper</Link>
-            <Link href="/auth" className={styles.navCta} id="nav-get-started">
-              Get Started
-            </Link>
+            {authUser ? (
+              <Link href="/profile" className={styles.navAvatar} id="nav-profile">
+                {(authUser.user_metadata?.first_name?.[0] || "").toUpperCase()}{(authUser.user_metadata?.last_name?.[0] || "").toUpperCase()}
+              </Link>
+            ) : (
+              <Link href="/auth" className={styles.navCta} id="nav-get-started">
+                Get Started
+              </Link>
+            )}
           </div>
         </div>
       </nav>

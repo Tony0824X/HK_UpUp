@@ -107,6 +107,27 @@
   box-shadow: var(--shadow-glow);
 }
 
+.navAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--gradient-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  text-decoration: none;
+}
+
+.navAvatar:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-glow);
+}
+
 /* ---- Section ---- */
 .section {
   position: relative;
