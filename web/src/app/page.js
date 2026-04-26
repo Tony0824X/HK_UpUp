@@ -262,7 +262,7 @@ export default function Home() {
           <div className={styles.logo}>
             <img src="/logo.png" alt="HK UpUp" className={styles.logoIcon} />
             <span className={styles.logoGradient}>HK UpUp</span>
-            <span className={styles.logoTagline}>香港一站式比賽資訊平台</span>
+            <span className={styles.logoTagline}>香港一站式比賽資訊平台 · 連接GitHub × AI自動匹配專屬比賽</span>
           </div>
           <div className={styles.navLinks}>
             <span className={`${styles.navLink} ${styles.navLinkActive}`}>Competition</span>
