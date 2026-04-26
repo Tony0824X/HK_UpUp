@@ -190,7 +190,7 @@ function ProfileContent() {
       <nav className={styles.navbar}>
         <div className={styles.navbarInner}>
           <Link href="/" className={styles.logo}>
-            <img src="/logo.svg" alt="HK UpUp" className={styles.logoIcon} />
+            <img src="/logo.png" alt="HK UpUp" className={styles.logoIcon} />
             <span className={styles.logoGradient}>HK UpUp</span>
           </Link>
           <div className={styles.navRight}>

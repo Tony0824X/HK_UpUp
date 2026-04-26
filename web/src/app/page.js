@@ -260,7 +260,7 @@ export default function Home() {
       <nav className={styles.navbar}>
         <div className={styles.navbarInner}>
           <div className={styles.logo}>
-            <img src="/logo.svg" alt="HK UpUp" className={styles.logoIcon} />
+            <img src="/logo.png" alt="HK UpUp" className={styles.logoIcon} />
             <span className={styles.logoGradient}>HK UpUp</span>
             <span className={styles.logoTagline}>香港一站式比賽資訊平台</span>
           </div>
