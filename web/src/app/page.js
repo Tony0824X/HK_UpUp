@@ -210,6 +210,7 @@ export default function Home() {
     const { data, error } = await supabase
       .from("competitions")
       .select("*")
+      .or("hidden.is.null,hidden.eq.false")
       .order("registration_deadline", { ascending: true });
 
     if (error) {

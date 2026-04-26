@@ -19,6 +19,7 @@ export default function EditCompetition({ params }) {
     prizes: "",
     official_url: "",
     status: "open",
+    hidden: false,
     poster_url: "",
   });
   const [posterFile, setPosterFile] = useState(null);
@@ -43,6 +44,7 @@ export default function EditCompetition({ params }) {
         prizes: data.prizes || "",
         official_url: data.official_url || "",
         status: data.status || "open",
+        hidden: data.hidden || false,
         poster_url: data.poster_url || "",
       });
       setPosterPreview(data.poster_url || "");
@@ -94,6 +96,7 @@ export default function EditCompetition({ params }) {
       official_url: form.official_url || "",
       poster_url,
       status: form.status,
+      hidden: form.hidden,
     }).eq("id", id);
 
     setSaving(false);
@@ -154,6 +157,14 @@ export default function EditCompetition({ params }) {
                 <select className={styles.formSelect} name="status" value={form.status} onChange={handleChange}>
                   <option value="open">Open</option>
                   <option value="closed">Closed</option>
+                </select>
+              </div>
+
+              <div>
+                <label className={styles.formLabel}>Hidden</label>
+                <select className={styles.formSelect} name="hidden" value={form.hidden} onChange={(e) => setForm({ ...form, hidden: e.target.value === "true" })}>
+                  <option value="false">No (Visible)</option>
+                  <option value="true">Yes (Hidden)</option>
                 </select>
               </div>
 

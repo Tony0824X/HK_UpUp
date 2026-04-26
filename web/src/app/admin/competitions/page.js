@@ -101,6 +101,7 @@ export default function AdminCompetitions() {
                   <th>Organizer</th>
                   <th>Deadline</th>
                   <th>Status</th>
+                  <th>Hidden</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -122,6 +123,7 @@ export default function AdminCompetitions() {
                         {item.status || "open"}
                       </span>
                     </td>
+                    <td>{item.hidden ? "🔒 Yes" : "—"}</td>
                     <td>
                       <div className={styles.actions}>
                         <Link href={`/admin/competitions/edit/${item.id}`} className={styles.editBtn}>Edit</Link>
