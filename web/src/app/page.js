@@ -52,6 +52,23 @@ function SkeletonCard() {
   );
 }
 
+// ---- Tag color map ----
+const TAG_COLORS = {
+  "Innovation":       { bg: "#DBEAFE", text: "#1E40AF", border: "#BFDBFE" },
+  "IT":               { bg: "#E0E7FF", text: "#3730A3", border: "#C7D2FE" },
+  "AI":               { bg: "#EDE9FE", text: "#5B21B6", border: "#DDD6FE" },
+  "Business":         { bg: "#FEF3C7", text: "#92400E", border: "#FDE68A" },
+  "Case Competition": { bg: "#D1FAE5", text: "#065F46", border: "#A7F3D0" },
+  "Design":           { bg: "#FCE7F3", text: "#9D174D", border: "#FBCFE8" },
+  "Hackathon":        { bg: "#CFFAFE", text: "#155E75", border: "#A5F3FC" },
+  "Finance":          { bg: "#FEF9C3", text: "#854D0E", border: "#FEF08A" },
+  "Social":           { bg: "#FFE4E6", text: "#9F1239", border: "#FECDD3" },
+  "Engineering":      { bg: "#E0F2FE", text: "#075985", border: "#BAE6FD" },
+  "Data Science":     { bg: "#F3E8FF", text: "#6B21A8", border: "#E9D5FF" },
+  "Marketing":        { bg: "#FFF7ED", text: "#9A3412", border: "#FED7AA" },
+  _default:           { bg: "#F1F5F9", text: "#475569", border: "#E2E8F0" },
+};
+
 // ---- Competition Card ----
 function CompetitionCard({ competition, index }) {
   const { formatted, diffDays } = formatDeadline(competition.registration_deadline);
@@ -122,9 +139,18 @@ function CompetitionCard({ competition, index }) {
           {/* Tags */}
           {competition.tags && competition.tags.length > 0 && (
             <div className={styles.compCardTags}>
-              {competition.tags.map((tag) => (
-                <span key={tag} className={styles.compTag}>{tag}</span>
-              ))}
+              {competition.tags.map((tag) => {
+                const colors = TAG_COLORS[tag] || TAG_COLORS._default;
+                return (
+                  <span
+                    key={tag}
+                    className={styles.compTag}
+                    style={{ background: colors.bg, color: colors.text, borderColor: colors.border }}
+                  >
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           )}
 
