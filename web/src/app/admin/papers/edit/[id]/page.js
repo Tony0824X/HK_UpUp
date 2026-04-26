@@ -20,6 +20,8 @@ export default function EditPaper({ params }) {
     venue: "",
     organizer: "",
     registration_deadline: "",
+    call_for_topics: "",
+    indexing: "",
   });
 
   useEffect(() => {
@@ -41,6 +43,8 @@ export default function EditPaper({ params }) {
         venue: data.venue || "",
         organizer: data.organizer || "",
         registration_deadline: data.registration_deadline || "",
+        call_for_topics: data.call_for_topics || "",
+        indexing: data.indexing || "",
       });
     }
     setLoading(false);
@@ -62,6 +66,8 @@ export default function EditPaper({ params }) {
       venue: s2t(form.venue) || null,
       organizer: s2t(form.organizer) || null,
       registration_deadline: s2t(form.registration_deadline) || null,
+      call_for_topics: s2t(form.call_for_topics) || null,
+      indexing: s2t(form.indexing) || null,
     }).eq("id", id);
 
     setSaving(false);
@@ -135,6 +141,16 @@ export default function EditPaper({ params }) {
               <div className={styles.formFieldFull}>
                 <label className={styles.formLabel}>Official URL</label>
                 <input className={styles.formInput} name="official_url" type="url" value={form.official_url} onChange={handleChange} />
+              </div>
+
+              <div className={styles.formFieldFull}>
+                <label className={styles.formLabel}>徵稿主題 (Call for Topics)</label>
+                <textarea className={styles.formInput} name="call_for_topics" value={form.call_for_topics} onChange={handleChange} rows={3} style={{ resize: "vertical" }} />
+              </div>
+
+              <div className={styles.formFieldFull}>
+                <label className={styles.formLabel}>檢索收錄 (Indexing)</label>
+                <input className={styles.formInput} name="indexing" value={form.indexing} onChange={handleChange} placeholder="e.g. SCI, EI, Scopus" />
               </div>
             </div>
 

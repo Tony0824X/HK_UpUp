@@ -21,6 +21,7 @@ export default function EditCompetition({ params }) {
     official_url: "",
     status: "open",
     hidden: false,
+    detail: "",
     poster_url: "",
   });
   const [posterFile, setPosterFile] = useState(null);
@@ -46,6 +47,7 @@ export default function EditCompetition({ params }) {
         official_url: data.official_url || "",
         status: data.status || "open",
         hidden: data.hidden || false,
+        detail: data.detail || "",
         poster_url: data.poster_url || "",
       });
       setPosterPreview(data.poster_url || "");
@@ -98,6 +100,7 @@ export default function EditCompetition({ params }) {
       poster_url,
       status: form.status,
       hidden: form.hidden,
+      detail: s2t(form.detail) || null,
     }).eq("id", id);
 
     setSaving(false);
@@ -182,6 +185,11 @@ export default function EditCompetition({ params }) {
               <div className={styles.formFieldFull}>
                 <label className={styles.formLabel}>Official URL</label>
                 <input className={styles.formInput} name="official_url" type="url" value={form.official_url} onChange={handleChange} />
+              </div>
+
+              <div className={styles.formFieldFull}>
+                <label className={styles.formLabel}>Detail</label>
+                <textarea className={styles.formInput} name="detail" value={form.detail} onChange={handleChange} rows={4} style={{ resize: "vertical" }} />
               </div>
 
               <div className={styles.formFieldFull}>

@@ -19,6 +19,7 @@ export default function AddCompetition() {
     official_url: "",
     status: "open",
     hidden: false,
+    detail: "",
   });
   const [posterFile, setPosterFile] = useState(null);
   const [posterPreview, setPosterPreview] = useState("");
@@ -74,6 +75,7 @@ export default function AddCompetition() {
       poster_url,
       status: form.status,
       hidden: form.hidden,
+      detail: s2t(form.detail) || null,
     });
 
     setSaving(false);
@@ -154,6 +156,11 @@ export default function AddCompetition() {
               <div className={styles.formFieldFull}>
                 <label className={styles.formLabel}>Official URL</label>
                 <input className={styles.formInput} name="official_url" type="url" value={form.official_url} onChange={handleChange} placeholder="https://..." />
+              </div>
+
+              <div className={styles.formFieldFull}>
+                <label className={styles.formLabel}>Detail</label>
+                <textarea className={styles.formInput} name="detail" value={form.detail} onChange={handleChange} rows={4} placeholder="Competition details, rules, requirements..." style={{ resize: "vertical" }} />
               </div>
 
               <div className={styles.formFieldFull}>
