@@ -51,9 +51,9 @@ export default function PaperPage() {
           <div className={styles.navLinks}>
             <Link href="/" className={styles.navLink}>Competition</Link>
             <Link href="/paper" className={`${styles.navLink} ${styles.navLinkActive}`}>Paper</Link>
-            <button className={styles.navCta} id="nav-get-started">
+            <Link href="/auth" className={styles.navCta} id="nav-get-started">
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
       </nav>
