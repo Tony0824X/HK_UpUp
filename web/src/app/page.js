@@ -129,8 +129,8 @@ function CompetitionCard({ competition, index }) {
         <div className={styles.compCardLeft}>
           <div className={styles.compCardOrganizer}>
             <span>🏛️</span>
-            {competition.organizer?.length > 50
-              ? competition.organizer.substring(0, 50) + "..."
+            {competition.organizer?.length > 80
+              ? competition.organizer.substring(0, 80) + "..."
               : competition.organizer}
           </div>
 
