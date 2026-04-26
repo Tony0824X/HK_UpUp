@@ -92,7 +92,26 @@ export default function PaperDetail() {
               {paper.registration_deadline || "TBC"}
             </div>
           </div>
+
+          {paper.indexing && (
+            <div className={styles.infoItem}>
+              <div className={styles.infoLabel}>🔍 檢索收錄 (Indexing)</div>
+              <div className={styles.infoValue}>{paper.indexing}</div>
+            </div>
+          )}
         </div>
+
+        {/* Call for Topics */}
+        {paper.call_for_topics && (
+          <div className={styles.detailSection}>
+            <h2 className={styles.sectionTitle}>📝 徵稿主題 (Call for Topics)</h2>
+            <div className={styles.detailContent}>
+              {paper.call_for_topics.split("\n").map((line, i) => (
+                <p key={i}>{line || "\u00A0"}</p>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* CTA */}
         {paper.official_url && (

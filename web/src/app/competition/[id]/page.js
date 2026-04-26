@@ -126,15 +126,29 @@ export default function CompetitionDetail() {
           </div>
         </div>
 
+        {/* Detail Section */}
+        {comp.detail && (
+          <div className={styles.detailSection}>
+            <h2 className={styles.sectionTitle}>📋 Competition Details</h2>
+            <div className={styles.detailContent}>
+              {comp.detail.split("\n").map((line, i) => (
+                <p key={i}>{line || "\u00A0"}</p>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* CTA */}
-        <a
-          href={comp.official_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={styles.ctaBtn}
-        >
-          Visit Official Website →
-        </a>
+        {comp.official_url && (
+          <a
+            href={comp.official_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.ctaBtn}
+          >
+            Visit Official Website →
+          </a>
+        )}
       </div>
     </div>
   );
