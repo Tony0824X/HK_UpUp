@@ -5,9 +5,9 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 import styles from "./admin.module.css";
 
-// Admin credentials
-const ADMIN_USER = "hkupupadmin426";
-const ADMIN_PASS = "hkupupadmin426.";
+// Admin credentials from env vars
+const ADMIN_USER = process.env.NEXT_PUBLIC_ADMIN_USER || "";
+const ADMIN_PASS = process.env.NEXT_PUBLIC_ADMIN_PASS || "";
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false);
