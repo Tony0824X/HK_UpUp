@@ -133,7 +133,7 @@ export default function AdminPapers() {
                   <th>Abbreviation</th>
                   <th>Full Name</th>
                   <th>Venue</th>
-                  <th>Deadline</th>
+                  <th>Conference Dates</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -152,7 +152,7 @@ export default function AdminPapers() {
                     <td><strong>{item.abbreviation || "-"}</strong></td>
                     <td><div className={styles.tableTitle}>{item.full_name}</div></td>
                     <td>{(item.venue || "").substring(0, 30)}</td>
-                    <td>{item.registration_deadline || "TBC"}</td>
+                    <td>{item.conference_dates || "TBC"}</td>
                     <td>
                       <div className={styles.actions}>
                         <Link href={`/admin/papers/edit/${item.id}`} className={styles.editBtn}>Edit</Link>
