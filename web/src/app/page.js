@@ -157,7 +157,7 @@ export default function Home() {
   const [allTags, setAllTags] = useState([]);
   const [showClosed, setShowClosed] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState(undefined);
   const dropdownRef = useRef(null);
 
   useEffect(() => {
@@ -241,7 +241,9 @@ export default function Home() {
           <div className={styles.navLinks}>
             <span className={`${styles.navLink} ${styles.navLinkActive}`}>Competition</span>
             <Link href="/paper" className={styles.navLink}>Paper</Link>
-            {authUser ? (
+            {authUser === undefined ? (
+              <div style={{ width: 36, height: 36 }} />
+            ) : authUser ? (
               <Link href="/profile" className={styles.navAvatar} id="nav-profile">
                 {(authUser.user_metadata?.first_name?.[0] || "").toUpperCase()}{(authUser.user_metadata?.last_name?.[0] || "").toUpperCase()}
               </Link>

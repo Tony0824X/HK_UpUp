@@ -9,7 +9,7 @@ export default function PaperPage() {
   const [papers, setPapers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [authUser, setAuthUser] = useState(null);
+  const [authUser, setAuthUser] = useState(undefined);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => setAuthUser(data?.user || null));
@@ -56,7 +56,9 @@ export default function PaperPage() {
           <div className={styles.navLinks}>
             <Link href="/" className={styles.navLink}>Competition</Link>
             <Link href="/paper" className={`${styles.navLink} ${styles.navLinkActive}`}>Paper</Link>
-            {authUser ? (
+            {authUser === undefined ? (
+              <div style={{ width: 36, height: 36 }} />
+            ) : authUser ? (
               <Link href="/profile" className={styles.navAvatar} id="nav-profile">
                 {(authUser.user_metadata?.first_name?.[0] || "").toUpperCase()}{(authUser.user_metadata?.last_name?.[0] || "").toUpperCase()}
               </Link>
