@@ -51,7 +51,7 @@ export default function PaperPage() {
           <Link href="/" className={styles.logo}>
             <img src="/logo.png" alt="HK UpUp" className={styles.logoIcon} />
             <span className={styles.logoGradient}>HK UpUp</span>
-            <span className={styles.logoTagline}>香港一站式比賽資訊平台 · 連接GitHub × AI自動匹配專屬比賽</span>
+            <span className={styles.logoTagline}>香港一站式比賽資訊平台 · GitHub × AI自動匹配</span>
           </Link>
           <div className={styles.navLinks}>
             <Link href="/" className={styles.navLink}>Competition</Link>
