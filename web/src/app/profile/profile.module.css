@@ -453,6 +453,27 @@
   color: var(--text-tertiary);
 }
 
+/* Logout Full */
+.logoutBtnFull {
+  width: 100%;
+  padding: 12px 0;
+  background: none;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-tertiary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-family: var(--font-sans);
+  margin-top: var(--space-sm);
+}
+
+.logoutBtnFull:hover {
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
   .main {

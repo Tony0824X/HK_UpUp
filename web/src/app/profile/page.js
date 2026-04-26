@@ -34,6 +34,7 @@ function ProfileContent() {
   const [school, setSchool] = useState("");
   const [faculty, setFaculty] = useState("");
   const [major, setMajor] = useState("");
+  const [year, setYear] = useState("");
   const [githubUsername, setGithubUsername] = useState("");
   const [githubToken, setGithubToken] = useState("");
 
@@ -65,6 +66,7 @@ function ProfileContent() {
         setSchool(prof.school || "");
         setFaculty(prof.faculty || "");
         setMajor(prof.major || "");
+        setYear(prof.year || "");
         setGithubUsername(prof.github_username || "");
         setGithubToken(prof.github_token || "");
       }
@@ -135,6 +137,7 @@ function ProfileContent() {
         school,
         faculty,
         major,
+        year,
       })
       .eq("id", user.id);
 
@@ -279,12 +282,26 @@ function ProfileContent() {
                 onChange={(e) => setMajor(e.target.value)}
               />
             </div>
+            <div className={styles.field}>
+              <label className={styles.label}>Year</label>
+              <select
+                className={styles.input}
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+              >
+                <option value="">Select year</option>
+                <option value="Year 1">Year 1</option>
+                <option value="Year 2">Year 2</option>
+                <option value="Year 3">Year 3</option>
+                <option value="Year 4">Year 4</option>
+                <option value="Year 5+">Year 5+</option>
+                <option value="Postgraduate">Postgraduate</option>
+                <option value="Alumni">Alumni</option>
+              </select>
+            </div>
           </div>
           <button onClick={handleSave} className={styles.saveBtn} disabled={saving}>
             {saving ? "Saving..." : "Save Changes"}
-          </button>
-          <button onClick={handleLogout} className={styles.logoutBtn}>
-            🚪 Logout
           </button>
         </section>
 
@@ -354,6 +371,11 @@ function ProfileContent() {
             </div>
           )}
         </section>
+
+        {/* Logout */}
+        <button onClick={handleLogout} className={styles.logoutBtnFull}>
+          🚪 Logout
+        </button>
       </main>
     </div>
   );
