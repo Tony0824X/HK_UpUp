@@ -7,7 +7,11 @@ import { supabase } from "@/lib/supabase";
 import styles from "./auth.module.css";
 
 // Allowed email domain suffixes
-const ALLOWED_DOMAINS = [".edu", ".edu.hk", ".edu.cn", ".hk", ".gov"];
+const ALLOWED_DOMAINS = [
+  ".edu", ".edu.hk", ".edu.cn", ".gov",
+  ".hku.hk", ".cuhk.edu.hk", ".ust.hk", ".cityu.edu.hk",
+  ".polyu.edu.hk", ".hkbu.edu.hk", ".eduhk.hk", ".ln.edu.hk",
+];
 
 function isAllowedEmail(email) {
   const lower = email.toLowerCase().trim();
@@ -35,7 +39,7 @@ export default function AuthPage() {
 
     // Validate .edu email
     if (!isAllowedEmail(email)) {
-      setError("請使用學術或政府電郵註冊（.edu / .edu.hk / .edu.cn / .hk / .gov）");
+      setError("請使用學術或政府電郵註冊（.edu / .edu.hk / .edu.cn / .gov 或香港各大學電郵）");
       return;
     }
 
@@ -185,7 +189,7 @@ export default function AuthPage() {
                 id="register-email"
               />
               <span className={styles.hint}>
-                支持 .edu / .edu.hk / .edu.cn / .hk / .gov 電郵
+                支持 .edu / .edu.hk / .edu.cn / .gov 及香港各大學電郵
               </span>
             </div>
 
