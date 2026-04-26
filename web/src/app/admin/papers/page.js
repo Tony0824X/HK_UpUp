@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -13,6 +13,8 @@ export default function AdminPapers() {
   const [search, setSearch] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [toast, setToast] = useState(null);
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("admin_auth") !== "true") {
@@ -23,7 +25,7 @@ export default function AdminPapers() {
   }, []);
 
   async function fetchItems() {
-    const { data } = await supabase.from("papers").select("*").order("created_at", { ascending: false });
+    const { data } = await supabase.from("papers").select("*").order("sort_order", { ascending: true });
     setItems(data || []);
     setLoading(false);
   }
@@ -45,12 +47,43 @@ export default function AdminPapers() {
     setTimeout(() => setToast(null), 3000);
   }
 
+  // Drag handlers
+  function handleDragStart(index) {
+    dragItem.current = index;
+  }
+
+  function handleDragEnter(index) {
+    dragOverItem.current = index;
+  }
+
+  async function handleDragEnd() {
+    if (dragItem.current === null || dragOverItem.current === null) return;
+    if (dragItem.current === dragOverItem.current) return;
+
+    const reordered = [...items];
+    const [removed] = reordered.splice(dragItem.current, 1);
+    reordered.splice(dragOverItem.current, 0, removed);
+
+    setItems(reordered);
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    // Save new order to DB
+    const updates = reordered.map((item, i) =>
+      supabase.from("papers").update({ sort_order: i + 1 }).eq("id", item.id)
+    );
+    await Promise.all(updates);
+    showToast("Order saved", "success");
+  }
+
   const filtered = search.trim()
     ? items.filter((i) =>
         (i.full_name || "").toLowerCase().includes(search.toLowerCase()) ||
         (i.abbreviation || "").toLowerCase().includes(search.toLowerCase())
       )
     : items;
+
+  const isDraggable = !search.trim();
 
   return (
     <div className={styles.page}>
@@ -84,6 +117,7 @@ export default function AdminPapers() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+          {!search.trim() && <span className={styles.dragHint}>☰ Drag rows to reorder</span>}
         </div>
 
         {loading ? (
@@ -95,6 +129,7 @@ export default function AdminPapers() {
             <table className={styles.table}>
               <thead>
                 <tr>
+                  {isDraggable && <th style={{ width: 36 }}></th>}
                   <th>Abbreviation</th>
                   <th>Full Name</th>
                   <th>Venue</th>
@@ -103,8 +138,17 @@ export default function AdminPapers() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((item) => (
-                  <tr key={item.id}>
+                {filtered.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    draggable={isDraggable}
+                    onDragStart={() => handleDragStart(index)}
+                    onDragEnter={() => handleDragEnter(index)}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={(e) => e.preventDefault()}
+                    className={isDraggable ? styles.draggableRow : ""}
+                  >
+                    {isDraggable && <td className={styles.dragHandle}>☰</td>}
                     <td><strong>{item.abbreviation || "-"}</strong></td>
                     <td><div className={styles.tableTitle}>{item.full_name}</div></td>
                     <td>{(item.venue || "").substring(0, 30)}</td>

@@ -253,6 +253,9 @@
 /* ---- Search ---- */
 .searchBar {
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .searchInput {
@@ -266,6 +269,12 @@
   outline: none;
   font-family: inherit;
   box-sizing: border-box;
+}
+
+.dragHint {
+  font-size: 0.78rem;
+  color: #94A3B8;
+  white-space: nowrap;
 }
 
 .searchInput:focus {
@@ -309,6 +318,30 @@
 
 .table tr:last-child td { border-bottom: none; }
 .table tr:hover td { background: #F8FAFC; }
+
+.draggableRow {
+  cursor: grab;
+  transition: background 0.15s;
+}
+
+.draggableRow:active {
+  cursor: grabbing;
+  background: #EEF2FF;
+}
+
+.dragHandle {
+  color: #CBD5E1;
+  font-size: 1rem;
+  cursor: grab;
+  user-select: none;
+  text-align: center;
+  width: 36px;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+  color: #6366F1;
+}
 
 .tableTitle {
   font-weight: 600;

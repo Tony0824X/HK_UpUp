@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
@@ -13,6 +13,8 @@ export default function AdminCompetitions() {
   const [search, setSearch] = useState("");
   const [deleteId, setDeleteId] = useState(null);
   const [toast, setToast] = useState(null);
+  const dragItem = useRef(null);
+  const dragOverItem = useRef(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && sessionStorage.getItem("admin_auth") !== "true") {
@@ -23,7 +25,7 @@ export default function AdminCompetitions() {
   }, []);
 
   async function fetchItems() {
-    const { data } = await supabase.from("competitions").select("*").order("created_at", { ascending: false });
+    const { data } = await supabase.from("competitions").select("*").order("sort_order", { ascending: true });
     setItems(data || []);
     setLoading(false);
   }
@@ -45,12 +47,43 @@ export default function AdminCompetitions() {
     setTimeout(() => setToast(null), 3000);
   }
 
+  // Drag handlers
+  function handleDragStart(index) {
+    dragItem.current = index;
+  }
+
+  function handleDragEnter(index) {
+    dragOverItem.current = index;
+  }
+
+  async function handleDragEnd() {
+    if (dragItem.current === null || dragOverItem.current === null) return;
+    if (dragItem.current === dragOverItem.current) return;
+
+    const reordered = [...items];
+    const [removed] = reordered.splice(dragItem.current, 1);
+    reordered.splice(dragOverItem.current, 0, removed);
+
+    setItems(reordered);
+    dragItem.current = null;
+    dragOverItem.current = null;
+
+    // Save new order to DB
+    const updates = reordered.map((item, i) =>
+      supabase.from("competitions").update({ sort_order: i + 1 }).eq("id", item.id)
+    );
+    await Promise.all(updates);
+    showToast("Order saved", "success");
+  }
+
   const filtered = search.trim()
     ? items.filter((i) =>
         (i.title || "").toLowerCase().includes(search.toLowerCase()) ||
         (i.organizer || "").toLowerCase().includes(search.toLowerCase())
       )
     : items;
+
+  const isDraggable = !search.trim(); // Only allow drag when not searching
 
   return (
     <div className={styles.page}>
@@ -85,6 +118,7 @@ export default function AdminCompetitions() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+          {!search.trim() && <span className={styles.dragHint}>☰ Drag rows to reorder</span>}
         </div>
 
         {loading ? (
@@ -96,6 +130,7 @@ export default function AdminCompetitions() {
             <table className={styles.table}>
               <thead>
                 <tr>
+                  {isDraggable && <th style={{ width: 36 }}></th>}
                   <th>Poster</th>
                   <th>Title</th>
                   <th>Organizer</th>
@@ -106,8 +141,17 @@ export default function AdminCompetitions() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((item) => (
-                  <tr key={item.id}>
+                {filtered.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    draggable={isDraggable}
+                    onDragStart={() => handleDragStart(index)}
+                    onDragEnter={() => handleDragEnter(index)}
+                    onDragEnd={handleDragEnd}
+                    onDragOver={(e) => e.preventDefault()}
+                    className={isDraggable ? styles.draggableRow : ""}
+                  >
+                    {isDraggable && <td className={styles.dragHandle}>☰</td>}
                     <td>
                       {item.poster_url ? (
                         <img src={item.poster_url} className={styles.tablePoster} alt="" />

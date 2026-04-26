@@ -211,7 +211,7 @@ export default function Home() {
       .from("competitions")
       .select("*")
       .or("hidden.is.null,hidden.eq.false")
-      .order("registration_deadline", { ascending: true });
+      .order("sort_order", { ascending: true });
 
     if (error) {
       console.error("Error fetching competitions:", error);
