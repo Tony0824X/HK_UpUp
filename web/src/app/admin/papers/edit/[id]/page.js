@@ -4,6 +4,7 @@ import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { s2t } from "@/lib/s2t";
 import styles from "../../../admin.module.css";
 
 export default function EditPaper({ params }) {
@@ -54,13 +55,13 @@ export default function EditPaper({ params }) {
     setSaving(true);
 
     const { error } = await supabase.from("papers").update({
-      full_name: form.full_name,
-      abbreviation: form.abbreviation || null,
+      full_name: s2t(form.full_name),
+      abbreviation: s2t(form.abbreviation) || null,
       official_url: form.official_url || null,
-      conference_dates: form.conference_dates || null,
-      venue: form.venue || null,
-      organizer: form.organizer || null,
-      registration_deadline: form.registration_deadline || null,
+      conference_dates: s2t(form.conference_dates) || null,
+      venue: s2t(form.venue) || null,
+      organizer: s2t(form.organizer) || null,
+      registration_deadline: s2t(form.registration_deadline) || null,
     }).eq("id", id);
 
     setSaving(false);

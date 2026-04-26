@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
+import { s2t } from "@/lib/s2t";
 import styles from "../../admin.module.css";
 
 export default function AddCompetition() {
@@ -64,11 +65,11 @@ export default function AddCompetition() {
       : [];
 
     const { error } = await supabase.from("competitions").insert({
-      title: form.title,
-      organizer: form.organizer,
+      title: s2t(form.title),
+      organizer: s2t(form.organizer),
       registration_deadline: form.registration_deadline || null,
       tags,
-      prizes: form.prizes || "TBC",
+      prizes: s2t(form.prizes) || "TBC",
       official_url: form.official_url || "",
       poster_url,
       status: form.status,
