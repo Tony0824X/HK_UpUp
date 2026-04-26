@@ -109,36 +109,38 @@ function CompetitionCard({ competition, index }) {
 
       {/* Body */}
       <div className={styles.compCardBody}>
-        <div className={styles.compCardOrganizer}>
-          <span>🏛️</span>
-          {competition.organizer?.length > 50
-            ? competition.organizer.substring(0, 50) + "..."
-            : competition.organizer}
+        <div className={styles.compCardLeft}>
+          <div className={styles.compCardOrganizer}>
+            <span>🏛️</span>
+            {competition.organizer?.length > 50
+              ? competition.organizer.substring(0, 50) + "..."
+              : competition.organizer}
+          </div>
+
+          <h3 className={styles.compCardTitle}>{competition.title}</h3>
+
+          {/* Tags */}
+          {competition.tags && competition.tags.length > 0 && (
+            <div className={styles.compCardTags}>
+              {competition.tags.map((tag) => (
+                <span key={tag} className={styles.compTag}>{tag}</span>
+              ))}
+            </div>
+          )}
+
+          {/* Meta */}
+          <div className={styles.compCardMeta}>
+            <div className={styles.compCardMetaItem}>
+              <span className={styles.compCardMetaIcon}>🎁</span>
+              <span>{competition.prizes || "TBC"}</span>
+            </div>
+          </div>
         </div>
 
-        <h3 className={styles.compCardTitle}>{competition.title}</h3>
-
-        {/* Tags */}
-        {competition.tags && competition.tags.length > 0 && (
-          <div className={styles.compCardTags}>
-            {competition.tags.map((tag) => (
-              <span key={tag} className={styles.compTag}>{tag}</span>
-            ))}
-          </div>
-        )}
-
-        {/* Meta */}
-        <div className={styles.compCardMeta}>
-          <div className={styles.compCardMetaItem}>
-            <span className={styles.compCardMetaIcon}>🎁</span>
-            <span>{competition.prizes || "TBC"}</span>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className={styles.compCardFooter}>
+        <div className={styles.compCardRight}>
           <div className={`${styles.compCardDeadline} ${deadlineClass}`}>
-            📅 Deadline: <strong>{deadlineText}</strong>
+            📅 Deadline
+            <strong>{deadlineText}</strong>
           </div>
           <div className={styles.compCardArrow}>→</div>
         </div>

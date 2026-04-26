@@ -426,9 +426,27 @@
   z-index: 1;
   padding: var(--space-lg);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   min-width: 0;
+  gap: var(--space-lg);
+}
+
+.compCardLeft {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.compCardRight {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  min-width: 120px;
+  text-align: right;
 }
 
 .compCardOrganizer {
@@ -519,13 +537,18 @@
 }
 
 .compCardDeadline {
-  font-size: 0.8rem;
-  color: var(--text-secondary);
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .compCardDeadline strong {
   color: var(--text-primary);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 
 .compCardArrow {
