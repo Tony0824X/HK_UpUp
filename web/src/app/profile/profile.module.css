@@ -67,7 +67,7 @@
 }
 
 .logoGradient {
-  background: var(--gradient-accent);
+  background: linear-gradient(135deg, #F97316, #2563EB);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
