@@ -461,10 +461,12 @@
 
 .compCardMeta {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: var(--space-sm);
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
   flex-shrink: 0;
+  align-items: center;
 }
 
 .compCardMetaItem {
