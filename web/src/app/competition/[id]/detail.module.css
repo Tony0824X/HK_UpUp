@@ -132,7 +132,7 @@
   font-weight: 800;
   line-height: 1.25;
   letter-spacing: -0.02em;
-  color: var(--text-primary);
+  color: #1E293B;
   margin-bottom: var(--space-md);
 }
 
@@ -142,7 +142,7 @@
   align-items: flex-start;
   gap: var(--space-sm);
   font-size: 0.95rem;
-  color: var(--primary);
+  color: #64748B;
   font-weight: 600;
   margin-bottom: var(--space-lg);
   line-height: 1.5;
@@ -158,12 +158,12 @@
 
 .tag {
   padding: 5px 14px;
-  background: var(--primary-subtle);
-  border: 1px solid rgba(108, 92, 231, 0.15);
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-full);
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--primary);
+  color: #475569;
 }
 
 /* ---- Info Grid ---- */
@@ -184,7 +184,7 @@
 
 .infoLabel {
   font-size: 0.8rem;
-  color: var(--text-tertiary);
+  color: #94A3B8;
   font-weight: 500;
   margin-bottom: var(--space-sm);
 }
@@ -192,7 +192,7 @@
 .infoValue {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: #1E293B;
 }
 
 .expired {
